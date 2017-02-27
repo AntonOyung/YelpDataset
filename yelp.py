@@ -22,7 +22,10 @@ review = [json.loads(line) for line in open(files[2], "r", encoding='utf-8')]
 
 #append all reviews to dictionary of businesses
 # allbid = {b['business_id']: [] for b in business}
+
+#Dictionary for 4+ star reviews
 fourplus = {}
+#Dictionary for <4 star reviews
 fourminus = {}
 for rev in review:
     if rev['stars'] >= 4:
@@ -35,6 +38,7 @@ for rev in review:
             fourminus[rev['business_id']].append(rev)
         else:
             fourminus[rev['business_id']] = [rev]
+
 tokenizer = RegexpTokenizer(r'\\w+')
 en_stop = get_stop_words('en')
 
@@ -42,7 +46,9 @@ p_stemmer = PorterStemmer()
 
 #Test business to analyze
 # testbis = list(allbid.values())[0]
+#Take reviews from random business
 testone = list(fourplus.values())[0]
+#Take reviews from random business
 testtwo = list(fourminus.values())[0]
 
 positivedocs = []
