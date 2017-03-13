@@ -18,24 +18,13 @@ file = open("data.json", "r")
 
 Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'utf-8')]
 
-#print(Andrewjson[0])
-
+#Andrewjson[0]["_E2LpT3PbYloqSFIQAYHTg"][2] returns num_reviews
+#Andrewjson[0]["_E2LpT3PbYloqSFIQAYHTg"] returns tuple [id, [reviews], num reviews]
 
 num_rev_dict = {}
-# =======
-# Andrewjson = None
-# #Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'utf-8')]
-# with open('data.json') as json_data:
-#     Andrewjson = json.load(json_data)
-# #append all reviews to dictionary of businesses
-# # allbid = {b['business_id']: [] for b in business}
-#
-# sorted_Andrew = max([Andrewjson[k][1] for k in list(Andrewjson.keys())], key = lambda x: len(Andrewjson[x][1]))
-# >>>>>>> 7775141e66019a719964b0471951f09128e59489
 
-for key in Andrewjson.keys():
-    num_rev_dict[key] = Andrewjson["review_count"]
-print(num_rev_dict)
+for business in Andrewjson[0]:
+    num_rev_dict[business] = Andrewjson[0][business][2]
 
 sorted_num_rev_dict = sorted(num_rev_dict.items(), key = operator.itemgetter(1))
 
