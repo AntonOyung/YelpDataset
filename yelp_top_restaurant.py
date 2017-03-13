@@ -29,7 +29,7 @@ for business in Andrewjson[0]:
 sorted_num_rev_dict = sorted(num_rev_dict.items(), key = operator.itemgetter(1))
 
 #sorted_Andrew = max([Andrewjson[0][k][1] for k in list(Andrewjson[0].keys())], key = lambda x: len(Andrewjson[0][x][1]))
-sorted_Andrew = Andrewjson[sorted_num_rev_dict[0][0]]
+sorted_Andrew = Andrewjson[0][sorted_num_rev_dict[0][0]]
 #Format of our sorted dictionary
 #sorted = (business_id: ["name of restaurant", ["review1", "review 2" ...], num_rev])
 
@@ -53,7 +53,7 @@ for review in top_one_reviews:
     tokens = [k for k in tokens if k != "" and k != "," and not k.isdigit()]
     stopped_tokens = [i for i in tokens if not i in en_stop]
     stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
-    positivedocs.append(stemmed_tokens)
+    TEST.append(stemmed_tokens)
 
 # turn our tokenized documents into a id <-> term dictionary
 dictionary = corpora.Dictionary(TEST)
