@@ -8,15 +8,13 @@ from nltk.stem.porter import PorterStemmer
 from gensim import corpora, models
 import gensim
 
-restaurants = []
 
-
-file = open(".json", "r")
+file = open("data.json", "r")
 #Load data
 
 #business = [json.loads(line) for line in open(restaurants[0], "r", encoding = 'utf-8')]
 
-Andrewjson = [json.loads(line) for line in open(restaurants[0], "r", encoding = 'utf-8')]
+Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'utf-8')]
 
 #append all reviews to dictionary of businesses
 # allbid = {b['business_id']: [] for b in business}
