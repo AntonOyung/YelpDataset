@@ -18,6 +18,8 @@ file = open("data.json", "r")
 
 Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'utf-8')]
 
+#print(Andrewjson[0])
+
 
 num_rev_dict = {}
 # =======
@@ -31,8 +33,9 @@ num_rev_dict = {}
 # sorted_Andrew = max([Andrewjson[k][1] for k in list(Andrewjson.keys())], key = lambda x: len(Andrewjson[x][1]))
 # >>>>>>> 7775141e66019a719964b0471951f09128e59489
 
-for business in Andrewjson:
-    num_rev_dict[business] = Andrewjson[business][2]
+for key in Andrewjson.keys():
+    num_rev_dict[key] = Andrewjson["review_count"]
+print(num_rev_dict)
 
 sorted_num_rev_dict = sorted(num_rev_dict.items(), key = operator.itemgetter(1))
 
