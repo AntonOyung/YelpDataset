@@ -16,18 +16,23 @@ file = open("data.json", "r")
 
 Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'utf-8')]
 
-#append all reviews to dictionary of businesses
-# allbid = {b['business_id']: [] for b in business}
 
-sorted_Andrew = max([Andrewjson[0][k][1] for k in list(Andrewjson[0].keys())], key = lambda x: len(Andrewjson[0][x][1]))
+num_rev_dict = {}
 
+for business in Andrewjson:
+    num_rev_dict[business] = Andrewjson[business][2]
+
+sorted_num_rev_dict = sorted(num_rev_dict.items(), key = operator.itemgetter(1))
+
+#sorted_Andrew = max([Andrewjson[0][k][1] for k in list(Andrewjson[0].keys())], key = lambda x: len(Andrewjson[0][x][1]))
+sorted_Andrew = Andrewjson[sorted_num_rev_dict[0][0]]
 #Format of our sorted dictionary
 #sorted = (business_id: ["name of restaurant", ["review1", "review 2" ...], num_rev])
 
 #Information on the restaurant with the most reviews
-top_one_name = sorted_Andrew[0].keys(0)
-top_one_reviews = sorted_Andrew[0].keys(1)
-top_one_num_revs = sorted_Andrew[0].keys(2)
+top_one_name = sorted_Andrew[0]
+top_one_reviews = sorted_Andrew[1]
+top_one_num_revs = sorted_Andrew[2]
 
 
 #Set up for LDA
