@@ -19,7 +19,7 @@ Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'ut
 #append all reviews to dictionary of businesses
 # allbid = {b['business_id']: [] for b in business}
 
-sorted_Andrew = sorted(Andrewjson.items(), key = operator.itemgetter(2))
+sorted_Andrew = max([Andrewjson[k][1] for k in list(Andrewjson.keys())], key = lambda x: len(Andrewjson[x][1]))
 
 #Format of our sorted dictionary
 #sorted = (business_id: ["name of restaurant", ["review1", "review 2" ...], num_rev])
