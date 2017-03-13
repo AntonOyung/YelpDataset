@@ -13,13 +13,14 @@ file = open("data.json", "r")
 #Load data
 
 #business = [json.loads(line) for line in open(restaurants[0], "r", encoding = 'utf-8')]
-
-Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'utf-8')]
-
+Andrewjson = None
+#Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'utf-8')]
+with open('data.json') as json_data:
+    Andrewjson = json.load(json_data)
 #append all reviews to dictionary of businesses
 # allbid = {b['business_id']: [] for b in business}
 
-sorted_Andrew = max([Andrewjson[0][k][1] for k in list(Andrewjson[0].keys())], key = lambda x: len(Andrewjson[0][x][1]))
+sorted_Andrew = max([Andrewjson[k][1] for k in list(Andrewjson.keys())], key = lambda x: len(Andrewjson[x][1]))
 
 #Format of our sorted dictionary
 #sorted = (business_id: ["name of restaurant", ["review1", "review 2" ...], num_rev])
