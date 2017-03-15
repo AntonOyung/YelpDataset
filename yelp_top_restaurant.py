@@ -3,10 +3,10 @@ import operator
 
 #import packages for LDA
 from nltk.tokenize import RegexpTokenizer
-from stop_words import get_stop_words
 from nltk.stem.porter import PorterStemmer
 from gensim import corpora, models
 import gensim
+import Stop_words_en
 
 
 file = open("data.json", "r")
@@ -41,7 +41,10 @@ top_one_num_revs = sorted_Andrew[2]
 
 #Set up for LDA
 tokenizer = RegexpTokenizer(r'\\w+')
-en_stop = get_stop_words('en')
+
+
+en_stop = Stop_words_en.make_stop_bigger()
+
 
 p_stemmer = PorterStemmer()
 
