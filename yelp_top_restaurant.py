@@ -7,7 +7,7 @@ from nltk.stem.porter import PorterStemmer
 from gensim import corpora, models
 import gensim
 import Stop_words_en
-
+import string
 
 file = open("data.json", "r")
 #Load data
@@ -23,13 +23,15 @@ Andrewjson = [json.loads(line) for line in open("data.json", "r", encoding = 'ut
 
 num_rev_dict = {}
 
+
+#[key, value]
 for business in Andrewjson[0]:
     num_rev_dict[business] = Andrewjson[0][business][2]
-
-sorted_num_rev_dict = sorted(num_rev_dict.items(), key = operator.itemgetter(1))
+sorted_num_rev_dict = sorted(num_rev_dict.items(), key = lambda x: x[1], reverse=True)
 
 #sorted_Andrew = max([Andrewjson[0][k][1] for k in list(Andrewjson[0].keys())], key = lambda x: len(Andrewjson[0][x][1]))
 sorted_Andrew = Andrewjson[0][sorted_num_rev_dict[0][0]]
+#print(str(sorted_Andrew))
 #Format of our sorted dictionary
 #sorted = (business_id: ["name of restaurant", ["review1", "review 2" ...], num_rev])
 
@@ -49,11 +51,10 @@ en_stop = Stop_words_en.make_stop_bigger()
 p_stemmer = PorterStemmer()
 
 TEST = []
-
 for review in top_one_reviews:
-    lowerRev = review['text'].lower()
-    tokens = lowerRev.split(" ")
-    tokens = [k for k in tokens if k != "" and k != "," and not k.isdigit()]
+    review_lower = review['text'].lower()
+    review_lower = review_lower.translate(review_lower.maketrans({key: None for key in string.punctuation}))                          # Output: string without punctuation
+    tokens = review_lower.split(" ")
     stopped_tokens = [i for i in tokens if not i in en_stop]
     stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
     TEST.append(stemmed_tokens)
@@ -64,6 +65,7 @@ dictionary = corpora.Dictionary(TEST)
 corpus = [dictionary.doc2bow(text) for text in TEST]
 
 # generate LDA model
-ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=2, id2word = dictionary, passes=10)
+ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=5, id2word = dictionary, passes=10)
 
-print(ldamodel.print_topics(num_topics=2, num_words=4))
+
+print(ldamodel.print_topics(num_topics=5, num_words=10))

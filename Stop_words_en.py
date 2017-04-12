@@ -6,7 +6,7 @@ from stop_words import get_stop_words
 
 def make_stop_bigger():
 	stop_words = get_stop_words("en")
-	custom = ["word", "one", "work", "get", "even", "just", "lot", "look", "place", "bit", "help", "time", "simpl", "also", ".", "-"]
+	custom = ["word", "one", "work", "get", "even", "just", "lot", "look", "place", "bit", "help", "time", "simpl", "also", ".", "-", ""]
 	stop_words += custom
 	return stop_words
 
