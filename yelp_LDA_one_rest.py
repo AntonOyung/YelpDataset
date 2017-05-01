@@ -18,14 +18,14 @@ def run_LDA(restaurant):
 	top_one_name = restaurant[1][0]
 	top_one_reviews = restaurant[1][1]
 	top_one_num_revs = restaurant[1][2]
-	top_one_rev_dist = {1:0, 1.5:0, 2:0, 2.5:0, 3:0, 3.5:0, 4:0, 4.5:0, 5:0}
+	top_one_rev_dist = {1:0, 2:0, 3:0, 4:0, 5:0}
 
 	#Set up for LDA
 	tokenizer = RegexpTokenizer(r'\\w+')
 	en_stop = Stop_words_en.make_stop_bigger()
 	p_stemmer = PorterStemmer()
 
-	TEST = []
+	Test = [[],[],[],[],[]] 
 
 	for review in top_one_reviews:
 		stars = review['stars']
@@ -37,20 +37,23 @@ def run_LDA(restaurant):
 		tokens = review_lower.split(" ")
 		stopped_tokens = [i for i in tokens if not i in en_stop]
 		stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
-		TEST.append(stemmed_tokens)
+		Test[int(stars)-1].append(stemmed_tokens)
 
-	# turn our tokenized documents into a id <-> term dictionary
-	dictionary = corpora.Dictionary(TEST)
-	# convert tokenized documents into a document-term matrix
-	corpus = [dictionary.doc2bow(text) for text in TEST]
-
-	# generate LDA model
-	ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=5, id2word = dictionary, passes=10)
-	topics = ldamodel.print_topics(num_topics=5, num_words=10)
 	print("Business name: " + top_one_name['name'])
 	print("Business Rating Dist: " + str(top_one_rev_dist))
-	print("Topics: ")
-	print(topics)
+	for star in Test:			
+		if len(star) > 10:
+			# turn our tokenized documents into a id <-> term dictionary
+			dictionary = corpora.Dictionary(star)
+			# convert tokenized documents into a document-term matrix
+			corpus = [dictionary.doc2bow(text) for text in star]
+			# generate LDA model
+			ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=3, id2word = dictionary, passes=10)
+			topics = ldamodel.print_topics(num_topics=3, num_words=5)
+			print(str(Test.index(star)+1) + " Star reviews" )
+			print("Topics: ")
+			print(topics)
+		
 	
-
-run_LDA(top3Json[0][0])
+restaurant = 2 
+run_LDA(top3Json[0][restaurant])
