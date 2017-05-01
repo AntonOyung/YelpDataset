@@ -1,9 +1,9 @@
 import json
 
-files = ["yelp_academic_dataset_business.json",
-    		"yelp_academic_dataset_checkin.json",
-    		"yelp_academic_dataset_review.json",
-    		"yelp_academic_dataset_user.json"]
+files = ["./yelp_academic_dataset_business.json",
+    		"./yelp_academic_dataset_checkin.json",
+    		"./yelp_academic_dataset_review.json",
+    		"./yelp_academic_dataset_user.json"]
 
 business = [json.loads(line) for line in open(files[0], "r", encoding = 'utf-8')]
 reviews = [json.loads(line) for line in open(files[2], "r", encoding = 'utf-8')]

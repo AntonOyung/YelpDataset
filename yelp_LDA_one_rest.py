@@ -9,12 +9,15 @@ import gensim
 import Stop_words_en
 import string
 
+top3Json = [json.loads(line) for line in open("top3.json", "r", encoding = 'utf-8')]
+
+
 #Restaurant is in the form of (business_id: [business object, ["review1", "review 2" ...], num_rev])
 def run_LDA(restaurant):
 	#Information on the top restaurant with the most reviews 
-	top_one_name = restaurant[0]
-	top_one_reviews = restaurant[1]
-	top_one_num_revs = restaurant[2]
+	top_one_name = restaurant[1][0]
+	top_one_reviews = restaurant[1][1]
+	top_one_num_revs = restaurant[1][2]
 	top_one_rev_dist = {1:0, 1.5:0, 2:0, 2.5:0, 3:0, 3.5:0, 4:0, 4.5:0, 5:0}
 
 	#Set up for LDA
@@ -43,7 +46,11 @@ def run_LDA(restaurant):
 
 	# generate LDA model
 	ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=5, id2word = dictionary, passes=10)
+	topics = ldamodel.print_topics(num_topics=5, num_words=10)
 	print("Business name: " + top_one_name['name'])
 	print("Business Rating Dist: " + str(top_one_rev_dist))
 	print("Topics: ")
-	print(ldamodel.print_topics(num_topics=5, num_words=10))
+	print(topics)
+	
+
+run_LDA(top3Json[0][0])
