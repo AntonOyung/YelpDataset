@@ -19,6 +19,11 @@ for rev in reviews:
     if i in d.keys():
         d[i][1].append(rev)
         d[i][2] += 1
-
-with open('data.json', 'w') as fp:
-    json.dump(d, fp)
+t0p3 = sorted([(key, value) for key, value in d.items()], key=lambda x: x[1][2], reverse=True)[:3]
+# num_rev_dict = {}
+# for business in d:
+#     num_rev_dict[business] = d[0][business][2]
+# sorted_num_rev_dict = sorted(num_rev_dict.items(), key = lambda x: x[1], reverse=True)
+# temp = sorted_num_rev_dict
+with open('top3.json', 'w') as fp:
+    json.dump(t0p3, fp)
