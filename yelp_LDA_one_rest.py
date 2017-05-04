@@ -11,7 +11,7 @@ import string
 import numpy as np
 
 
-top3Json = [json.loads(line) for line in open("top3.json", "r", encoding = 'utf-8')]
+top15Json = [json.loads(line) for line in open("top15.json", "r", encoding = 'utf-8')]
 
 
 #Restaurant is in the form of (business_id: [business object, ["review1", "review 2" ...], num_rev])
@@ -48,8 +48,8 @@ def run_LDA(restaurant):
 			else:
 				d[word] = 1
 		Test[int(stars)-1].append(stemmed_tokens)
-	print("Step 1")
-	return [unique_stemmed_words, all_rev]
+	# print("Step 1")
+	
 	# print("Business name: " + top_one_name['name'])
 	# print("Business Rating Dist: " + str(top_one_rev_dist))
 	# for star in Test:			
@@ -64,6 +64,7 @@ def run_LDA(restaurant):
 	# 		print(str(Test.index(star)+1) + " Star reviews" )
 	# 		print("Topics: ")
 	# 		print(topics)
+	return [unique_stemmed_words, all_rev]
 def term_frequency(word, tokenized_str):
     return tokenized_str.count(word)
 def idf_values(tokenized_users, term_index):
@@ -116,13 +117,14 @@ def tf_idf(tokenized_users, query, term_index):
 
 
 restaurant = 0
-answer = run_LDA(top3Json[0][restaurant])
-print(len(answer[0][4]))
-#print(tf_idf(answer[1][4], ["great", "food", "steak", "vega","bellagio"], answer[0][4])[0])
-#print("3stars: " + tf_idf(answer[1][2], ["food", "tabl", "good", "servic","great"], answer[0][2])[0])
-print("1star: " + tf_idf(answer[1][0], ["food", "wait", "us", "tabl","servic"], answer[0][0])[0])
-print("2stars: " + tf_idf(answer[1][1], ["food", "order", "tabl", "us","restaur"], answer[0][1])[0])
-print("4stars: " + tf_idf(answer[1][3], ["good", "breakfast", "egg", "great","servic"], answer[0][3])[0])
+answer = run_LDA(top15Json[0][restaurant])
+#print(len(answer[0][4]))
+
+# print("3stars: " + tf_idf(answer[1][2], ["food", "tabl", "good", "servic","great"], answer[0][2])[0])
+#print("1star: " + tf_idf(answer[1][0], ["pizza", "order", "much", "rude","line"], answer[0][0])[0])
+#print("2stars: " + tf_idf(answer[1][1], ["pizza", "wait", "line", "go","slice"], answer[0][1])[0])
+print("4stars: " + tf_idf(answer[1][3], ["good", "breakfast", "egg", "great","french"], answer[0][3])[0])
+print("5stars: " +tf_idf(answer[1][4], ["steak", "vega", "french", "egg","order"], answer[0][4])[0])
 
 
 
